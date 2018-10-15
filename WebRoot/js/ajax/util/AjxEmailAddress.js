@@ -29,21 +29,21 @@
  * with RFC2822, so there are limitations for some of the edge cases.
  *
  * @author Conrad Damon
- * 
+ *
  * @param {string}	address		an email string, or just the address portion
  * @param {constant}	type		from, to, cc, bcc, or reply-to
  * @param {string}	name		the personal name portion
  * @param {string}	dispName	a brief display version of the name
  * @param {boolean}	isGroup		if <code>true</code>, the address param is really a list of email addresses
- * 
+ *
  */
 AjxEmailAddress = function(address, type, name, dispName, isGroup, canExpand) {
-	this.address = address;
-	this.name = this._setName(name);
-	this.dispName = dispName;
-	this.type = type || AjxEmailAddress.TO;
-	this.isGroup = isGroup;
-	this.canExpand = canExpand;
+  this.address = address;
+  this.name = this._setName(name);
+  this.dispName = dispName;
+  this.type = type || AjxEmailAddress.TO;
+  this.isGroup = isGroup;
+  this.canExpand = canExpand;
 };
 
 AjxEmailAddress.prototype.isAjxEmailAddress = true;
@@ -56,55 +56,55 @@ AjxEmailAddress.customInvalidEmailPats = [];
 /**
  * Defines the "from" type.
  */
-AjxEmailAddress.FROM		= "FROM";
+AjxEmailAddress.FROM = "FROM";
 /**
  * Defines the "to" type.
  */
-AjxEmailAddress.TO			= "TO";
+AjxEmailAddress.TO = "TO";
 /**
  * Defines the "cc" type.
  */
-AjxEmailAddress.CC			= "CC";
+AjxEmailAddress.CC = "CC";
 /**
  * Defines the "bcc" type.
  */
-AjxEmailAddress.BCC			= "BCC";
-AjxEmailAddress.REPLY_TO	= "REPLY_TO";
-AjxEmailAddress.SENDER		= "SENDER";
-AjxEmailAddress.READ_RECEIPT= "READ_RECEIPT";
+AjxEmailAddress.BCC = "BCC";
+AjxEmailAddress.REPLY_TO = "REPLY_TO";
+AjxEmailAddress.SENDER = "SENDER";
+AjxEmailAddress.READ_RECEIPT = "READ_RECEIPT";
 AjxEmailAddress.RESENT_FROM = "RESENT_FROM";
 
 AjxEmailAddress.TYPE_STRING = {};
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.FROM]			= "from";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.TO]				= "to";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.CC]				= "cc";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.BCC]			= "bcc";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.REPLY_TO]		= "replyTo";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.SENDER]			= "sender";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.READ_RECEIPT]	= "readReceipt";
-AjxEmailAddress.TYPE_STRING[AjxEmailAddress.RESENT_FROM]	= "resentFrom";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.FROM] = "from";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.TO] = "to";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.CC] = "cc";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.BCC] = "bcc";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.REPLY_TO] = "replyTo";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.SENDER] = "sender";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.READ_RECEIPT] = "readReceipt";
+AjxEmailAddress.TYPE_STRING[AjxEmailAddress.RESENT_FROM] = "resentFrom";
 
 AjxEmailAddress.fromSoapType = {};
-AjxEmailAddress.fromSoapType["f"]  = AjxEmailAddress.FROM;
-AjxEmailAddress.fromSoapType["t"]  = AjxEmailAddress.TO;
-AjxEmailAddress.fromSoapType["c"]  = AjxEmailAddress.CC;
-AjxEmailAddress.fromSoapType["b"]  = AjxEmailAddress.BCC;
-AjxEmailAddress.fromSoapType["r"]  = AjxEmailAddress.REPLY_TO;
-AjxEmailAddress.fromSoapType["s"]  = AjxEmailAddress.SENDER;
-AjxEmailAddress.fromSoapType["n"]  = AjxEmailAddress.READ_RECEIPT;
+AjxEmailAddress.fromSoapType["f"] = AjxEmailAddress.FROM;
+AjxEmailAddress.fromSoapType["t"] = AjxEmailAddress.TO;
+AjxEmailAddress.fromSoapType["c"] = AjxEmailAddress.CC;
+AjxEmailAddress.fromSoapType["b"] = AjxEmailAddress.BCC;
+AjxEmailAddress.fromSoapType["r"] = AjxEmailAddress.REPLY_TO;
+AjxEmailAddress.fromSoapType["s"] = AjxEmailAddress.SENDER;
+AjxEmailAddress.fromSoapType["n"] = AjxEmailAddress.READ_RECEIPT;
 AjxEmailAddress.fromSoapType["rf"] = AjxEmailAddress.RESENT_FROM;
 
 AjxEmailAddress.toSoapType = {};
-AjxEmailAddress.toSoapType[AjxEmailAddress.FROM]		= "f";
-AjxEmailAddress.toSoapType[AjxEmailAddress.TO]			= "t";
-AjxEmailAddress.toSoapType[AjxEmailAddress.CC]			= "c";
-AjxEmailAddress.toSoapType[AjxEmailAddress.BCC]			= "b";
-AjxEmailAddress.toSoapType[AjxEmailAddress.REPLY_TO]	= "r";
-AjxEmailAddress.toSoapType[AjxEmailAddress.SENDER]		= "s";
-AjxEmailAddress.toSoapType[AjxEmailAddress.READ_RECEIPT]= "n";
+AjxEmailAddress.toSoapType[AjxEmailAddress.FROM] = "f";
+AjxEmailAddress.toSoapType[AjxEmailAddress.TO] = "t";
+AjxEmailAddress.toSoapType[AjxEmailAddress.CC] = "c";
+AjxEmailAddress.toSoapType[AjxEmailAddress.BCC] = "b";
+AjxEmailAddress.toSoapType[AjxEmailAddress.REPLY_TO] = "r";
+AjxEmailAddress.toSoapType[AjxEmailAddress.SENDER] = "s";
+AjxEmailAddress.toSoapType[AjxEmailAddress.READ_RECEIPT] = "n";
 
-AjxEmailAddress.SEPARATOR = "; ";				// used to join addresses
-AjxEmailAddress.DELIMS = [';', ',', '\n', ' '];	// recognized as address delimiters
+AjxEmailAddress.SEPARATOR = "; "; // used to join addresses
+AjxEmailAddress.DELIMS = [";", ",", "\n", " "]; // recognized as address delimiters
 AjxEmailAddress.IS_DELIM = AjxUtil.arrayAsHash(AjxEmailAddress.DELIMS);
 
 // validation patterns
@@ -128,81 +128,85 @@ AjxEmailAddress.commentPat = /\((.*)\)/g;
 AjxEmailAddress.phrasePat = /(((\s*[^\x00-\x1F\x7F\u0080-\uFFFF()<>\[\]:;@\"\s]+\s*)|(\s*"(([^\\"])|(\\([^\x0A\x0D])))+"\s*))+)/;
 AjxEmailAddress.boundAddrPat = /(\s*<?(((\s*([^\x00-\x1F\x7F\u0080-\uFFFF()<>\[\]:;@\,."\s]+(\.[^\x00-\x1F\x7F\u0080-\uFFFF()<>\[\]:;@\,."\s]+)*)\s*)|(\s*"(([^\\"])|(\\([^\x0A\x0D])))+"\s*))\@((\s*([^\x00-\x1F\x7F\u0080-\uFFFF()<>\[\]:;@\,."\s]+(\.[^\x00-\x1F\x7F\u0080-\uFFFF()<>\[\]:;@\,."\s]+)*)\s*)|(\s*\[(\s*(([^\[\]\\])|(\\([^\x0A\x0D])))+)*\s*\]\s*)))>?\s*)$/;
 
-AjxEmailAddress.validateAddress =
-function (str) {
-	str = AjxStringUtil.trim(str);
-	return AjxEmailAddress._prelimCheck(str) && AjxEmailAddress.addrOnlyPat.test(str);
+AjxEmailAddress.validateAddress = function(str) {
+  str = AjxStringUtil.trim(str);
+  return (
+    AjxEmailAddress._prelimCheck(str) && AjxEmailAddress.addrOnlyPat.test(str)
+  );
 };
 
 /**
- * Parses an email address string into its component parts. The parsing is adapted from the perl module 
+ * Parses an email address string into its component parts. The parsing is adapted from the perl module
  * <a href="http://search.cpan.org/~cwest/Email-Address-1.2/lib/Email/Address.pm">Email::Address</a>. Check that out if you
- * want to know how the gory regexes that do the parsing were built. They are based on RFC2822, but don't represent a full 
+ * want to know how the gory regexes that do the parsing were built. They are based on RFC2822, but don't represent a full
  * implementation. We don't really need or want that, since we don't want to be overly restrictive or bloated. It was easier
  * to just use the resulting regexes from the Perl module, rather than go through all the rigmarole of building them up from
  * atoms.
  * <p>
  * If the address parses successfully, the current object's properties will be set.
  * </p>
- * 
+ *
  * @param	{string}	str		the string to parse
  * @return	{AjxEmailAddress}	the email address or <code>null</code>
  */
 AjxEmailAddress.parse = function(str) {
+  var addr, name;
+  var str = AjxStringUtil.trim(str);
+  var prelimOkay = AjxEmailAddress._prelimCheck(str);
+  if (!(prelimOkay && str.match(AjxEmailAddress.addrPat))) {
+    return null;
+  }
 
-	var addr, name;
-	var str = AjxStringUtil.trim(str);
-	var prelimOkay = AjxEmailAddress._prelimCheck(str);
-	if (!(prelimOkay && str.match(AjxEmailAddress.addrPat))) {
-		return null;
-	}
+  // Note: It would be nice if you could get back the matching parenthesized subexpressions from replace,
+  // then we wouldn't have to do both a match and a replace. The parsing works by removing parts after it
+  // finds them.
 
-	// Note: It would be nice if you could get back the matching parenthesized subexpressions from replace,
-	// then we wouldn't have to do both a match and a replace. The parsing works by removing parts after it
-	// finds them.
-	
-	// First find the address (and remove it)
-	var parts = str.match(AjxEmailAddress.addrAngleQuotePat) || str.match(AjxEmailAddress.addrAnglePat);
-	if (parts && parts.length) {
-		addr = parts[2];
-		str = str.replace(AjxEmailAddress.addrAnglePat, '');
-	}
-	else {
-		parts = str.match(AjxEmailAddress.addrPat1);
-		if (parts && parts.length) {
-			if (parts[1] === '"') {
-				return null;	// unmatched quote
-			}
-            // AjxEmailAddress.addrPat recognizes the email better than using parts[0] from AjxEmailAddress.addrPat1
-            var parts1 = str.match(AjxEmailAddress.addrPat);
-            addr = parts1 && parts1.length && parts1[0] ? AjxStringUtil.trim(parts1[0]) : parts[0];
-			str = str.replace(AjxEmailAddress.addrPat, '');
-		}
-	}
+  // First find the address (and remove it)
+  var parts =
+    str.match(AjxEmailAddress.addrAngleQuotePat) ||
+    str.match(AjxEmailAddress.addrAnglePat);
+  if (parts && parts.length) {
+    addr = parts[2];
+    str = str.replace(AjxEmailAddress.addrAnglePat, "");
+  } else {
+    parts = str.match(AjxEmailAddress.addrPat1);
+    if (parts && parts.length) {
+      if (parts[1] === '"') {
+        return null; // unmatched quote
+      }
+      // AjxEmailAddress.addrPat recognizes the email better than using parts[0] from AjxEmailAddress.addrPat1
+      var parts1 = str.match(AjxEmailAddress.addrPat);
+      addr =
+        parts1 && parts1.length && parts1[0]
+          ? AjxStringUtil.trim(parts1[0])
+          : parts[0];
+      str = str.replace(AjxEmailAddress.addrPat, "");
+    }
+  }
 
-	// double-check with validateAddress(), which uses addrOnlyPat
-	if (!addr || !AjxEmailAddress.validateAddress(addr)) {
-		return null;
-	}
+  // double-check with validateAddress(), which uses addrOnlyPat
+  if (!addr || !AjxEmailAddress.validateAddress(addr)) {
+    return null;
+  }
 
-	// Validate against any customer-provided patterns
-	for (var i = 0; i < AjxEmailAddress.customInvalidEmailPats.length; i++) {
-		if (AjxEmailAddress.customInvalidEmailPats[i].test(addr)) {
-			return null;
-		}
-	}
+  // Validate against any customer-provided patterns
+  for (var i = 0; i < AjxEmailAddress.customInvalidEmailPats.length; i++) {
+    if (AjxEmailAddress.customInvalidEmailPats[i].test(addr)) {
+      return null;
+    }
+  }
 
-	// What remains is the name
-	if (str) {
-		name = AjxStringUtil.trim(str);
+  // What remains is the name
+  if (str) {
+    name = AjxStringUtil.trim(str);
 
-		// Trim off leading and trailing quotes, but leave escaped quotes and unescape them
-		name = name.replace(/\\"/g,"&quot;");
-		name = AjxStringUtil.trim(name, null, '"');
-		name = name.replace(/&quot;/g, '"');
-	}
-	
-	return new AjxEmailAddress(addr, null, name);
+    // Trim off leading and trailing quotes, but leave escaped quotes and unescape them
+    name = name.replace(/\\"/g, "&quot;");
+    name = AjxStringUtil.trim(name, null, '"');
+    name = name.replace(/&quot;/g, '"');
+  }
+
+  return new AjxEmailAddress(addr, null, name);
 };
 
 /**
@@ -215,39 +219,38 @@ AjxEmailAddress.parse = function(str) {
  * @param	{boolean}	strict		if <code>true</code>, do strict checking
  * @return	{hash}		the good/bad/all addresses
  */
-AjxEmailAddress.parseEmailString =
-function(emailStr, type, strict) {
-	var good = new AjxVector();
-	var bad = new AjxVector();
-	var all = new AjxVector();
-	var addrList = AjxEmailAddress.split(emailStr);
-	for (var i = 0; i < addrList.length; i++) {
-		var addrStr = AjxStringUtil.trim(addrList[i]);
-		if (addrStr) {
-			var addr = AjxEmailAddress.parse(addrStr);
-			if (!addr && !strict) {
-				var temp = addrStr;
-				var parts = temp.match(AjxEmailAddress.addrAnglePat);
-				if (parts && parts.length) {
-					var name = temp.replace(AjxEmailAddress.addrAnglePat, '');
-					var newAddr = ['"', name, '" ', parts[0]].join("");
-					addr = AjxEmailAddress.parse(newAddr);
-					if (addr) {
-						addr.name = name; // reset name to original unquoted form
-					}
-				}
-			}
-			if (addr) {
-				addr.type = type;
-				good.add(addr);
-				all.add(addr);
-			} else {
-				good.add(addrStr);
-				all.add(new AjxEmailAddress(addrStr));
-			}
-		}
-	}
-	return {good: good, bad: bad, all: all};
+AjxEmailAddress.parseEmailString = function(emailStr, type, strict) {
+  var good = new AjxVector();
+  var bad = new AjxVector();
+  var all = new AjxVector();
+  var addrList = AjxEmailAddress.split(emailStr);
+  for (var i = 0; i < addrList.length; i++) {
+    var addrStr = AjxStringUtil.trim(addrList[i]);
+    if (addrStr) {
+      var addr = AjxEmailAddress.parse(addrStr);
+      if (!addr && !strict) {
+        var temp = addrStr;
+        var parts = temp.match(AjxEmailAddress.addrAnglePat);
+        if (parts && parts.length) {
+          var name = temp.replace(AjxEmailAddress.addrAnglePat, "");
+          var newAddr = ['"', name, '" ', parts[0]].join("");
+          addr = AjxEmailAddress.parse(newAddr);
+          if (addr) {
+            addr.name = name; // reset name to original unquoted form
+          }
+        }
+      }
+      if (addr) {
+        addr.type = type;
+        good.add(addr);
+        all.add(addr);
+      } else {
+        bad.add(addrStr);
+        all.add(new AjxEmailAddress(addrStr));
+      }
+    }
+  }
+  return { good: good, bad: bad, all: all };
 };
 
 /**
@@ -258,9 +261,8 @@ function(emailStr, type, strict) {
  * @param	{boolean}	strict		if <code>true</code>, do strict checking
  * @return	{AjxVector}				valid addresses
  */
-AjxEmailAddress.getValidAddresses =
-function(emailStr, type, strict) {
-	return AjxEmailAddress.parseEmailString(emailStr, type, strict).good;
+AjxEmailAddress.getValidAddresses = function(emailStr, type, strict) {
+  return AjxEmailAddress.parseEmailString(emailStr, type, strict).good;
 };
 
 /**
@@ -270,17 +272,21 @@ function(emailStr, type, strict) {
  * @return	{boolean}	<code>true</code> if the string is valid
  */
 AjxEmailAddress.isValid = function(str) {
-	return AjxEmailAddress.parse(str) != null;
+  return AjxEmailAddress.parse(str) != null;
 };
 
-AjxEmailAddress._prelimCheck =
-function(str) {
-	// Do preliminary check for @ since we don't support local addresses, and as workaround for Mozilla bug
-	// https://bugzilla.mozilla.org/show_bug.cgi?id=225094
-	// Also check for . since we require FQDN
-	var atIndex = str.indexOf('@');
-	var dotIndex = str.lastIndexOf('.');
-	return ((atIndex != -1) && (dotIndex != -1) && (dotIndex > atIndex) && (dotIndex != str.length - 1));
+AjxEmailAddress._prelimCheck = function(str) {
+  // Do preliminary check for @ since we don't support local addresses, and as workaround for Mozilla bug
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=225094
+  // Also check for . since we require FQDN
+  var atIndex = str.indexOf("@");
+  var dotIndex = str.lastIndexOf(".");
+  return (
+    atIndex != -1 &&
+    dotIndex != -1 &&
+    dotIndex > atIndex &&
+    dotIndex != str.length - 1
+  );
 };
 
 /**
@@ -294,7 +300,7 @@ function(str) {
  * <li><i>comma</i> -- must not be inside quoted or comment text, and must follow an address (which may be in angle brackets)</li>
  * <li><i>space</i> -- can only separate plain addresses (no quoted or comment text)</li>
  * </ul>
- * 
+ *
  * The requirement that a comma follow an address allows us to be lenient when a mailer
  * doesn't quote the friendly part, so that a string such as the one below is split correctly:
  * <code>Smith, John &lt;jsmith@aol.com&gt;</code>
@@ -302,261 +308,268 @@ function(str) {
  * @param {string}	str	the string to be split
  * @return	{array}	the list of {String} addresses
  */
-AjxEmailAddress.split =
-function(str) {
-	str = AjxStringUtil.trim(str);
-	// first, construct a list of ranges to ignore because they are quoted or comment text
-	var ignore = [];
-	var pos = 0, startPos = 0;
-	var prevCh = "", startCh = "";
-	var inside = false;
-	while (pos < str.length) {
-		var ch = str.charAt(pos);
-		if ((ch == '"' || ch == '(') && prevCh != "\\") {
-			inside = true;
-			startCh = ch;
-			startPos = pos;
-			pos++;
-			while (inside && pos < str.length) {
-				var ch = str.charAt(pos);
-				if (((startCh == '"' && ch == '"') || (startCh == '(' && ch == ')')) && (prevCh != "\\")) {
-					ignore.push({start: startPos, end: pos});
-					inside = false;
-				}
-				pos++;
-				prevCh = ch;
-			}
-		} else {
-			pos++;
-		}
-		prevCh = ch;
-	}
-	if (ignore.length) {
-		AjxEmailAddress.IS_DELIM[" "] = false;
-	}
-	
-	// Progressively scan the string for delimiters. Once an email string has been found, continue with
-	// the remainder of the original string.
-	startPos = 0;
-	var addrList = [];
-	while (startPos < str.length) {
-		var sub = str.substring(startPos, str.length);
-		pos = 0;
-		var delimPos = sub.length;
-		while ((delimPos == sub.length) && (pos < sub.length)) {
-			var ch = sub.charAt(pos);
-			if (AjxEmailAddress.IS_DELIM[ch]) {
-				var doIgnore = false;
-				if (ch != "\n") {
-					for (var i = 0; i < ignore.length; i++) {
-						var range = ignore[i];
-						var absPos = startPos + pos;
-						doIgnore = (absPos >= range.start && absPos <= range.end);
-						if (doIgnore) break;
-					}
-				}
-				if (!doIgnore) {
-					var doAdd = true;
-					var test = sub.substring(0, pos);
-					if (ch == "," || ch == " ") {
-						// comma/space allowed as non-delimeter outside quote/comment,
-						// so we make sure it follows an actual address
-						doAdd = test.match(AjxEmailAddress.boundAddrPat);
-					}
-					if (doAdd) {
-						addrList.push(AjxStringUtil.trim(test));
-						delimPos = pos;
-						startPos += test.length + 1;
-					}
-				}
-				// strip extra delimeters
-				ch = str.charAt(startPos);
-				while ((startPos < str.length) && AjxEmailAddress.IS_DELIM[ch]) {
-					startPos++;
-					ch = str.charAt(startPos);
-				}
-				pos++;
-			} else {
-				pos++;
-			}
-		}
-		if (delimPos == sub.length) {
-			addrList.push(AjxStringUtil.trim(sub));
-			startPos += sub.length + 1;
-		}
-	}
-	AjxEmailAddress.IS_DELIM[" "] = true;
+AjxEmailAddress.split = function(str) {
+  str = AjxStringUtil.trim(str);
+  // first, construct a list of ranges to ignore because they are quoted or comment text
+  var ignore = [];
+  var pos = 0,
+    startPos = 0;
+  var prevCh = "",
+    startCh = "";
+  var inside = false;
+  while (pos < str.length) {
+    var ch = str.charAt(pos);
+    if ((ch == '"' || ch == "(") && prevCh != "\\") {
+      inside = true;
+      startCh = ch;
+      startPos = pos;
+      pos++;
+      while (inside && pos < str.length) {
+        var ch = str.charAt(pos);
+        if (
+          ((startCh == '"' && ch == '"') || (startCh == "(" && ch == ")")) &&
+          prevCh != "\\"
+        ) {
+          ignore.push({ start: startPos, end: pos });
+          inside = false;
+        }
+        pos++;
+        prevCh = ch;
+      }
+    } else {
+      pos++;
+    }
+    prevCh = ch;
+  }
+  if (ignore.length) {
+    AjxEmailAddress.IS_DELIM[" "] = false;
+  }
 
-	return addrList;
+  // Progressively scan the string for delimiters. Once an email string has been found, continue with
+  // the remainder of the original string.
+  startPos = 0;
+  var addrList = [];
+  while (startPos < str.length) {
+    var sub = str.substring(startPos, str.length);
+    pos = 0;
+    var delimPos = sub.length;
+    while (delimPos == sub.length && pos < sub.length) {
+      var ch = sub.charAt(pos);
+      if (AjxEmailAddress.IS_DELIM[ch]) {
+        var doIgnore = false;
+        if (ch != "\n") {
+          for (var i = 0; i < ignore.length; i++) {
+            var range = ignore[i];
+            var absPos = startPos + pos;
+            doIgnore = absPos >= range.start && absPos <= range.end;
+            if (doIgnore) break;
+          }
+        }
+        if (!doIgnore) {
+          var doAdd = true;
+          var test = sub.substring(0, pos);
+          if (ch == "," || ch == " ") {
+            // comma/space allowed as non-delimeter outside quote/comment,
+            // so we make sure it follows an actual address
+            doAdd = test.match(AjxEmailAddress.boundAddrPat);
+          }
+          if (doAdd) {
+            addrList.push(AjxStringUtil.trim(test));
+            delimPos = pos;
+            startPos += test.length + 1;
+          }
+        }
+        // strip extra delimeters
+        ch = str.charAt(startPos);
+        while (startPos < str.length && AjxEmailAddress.IS_DELIM[ch]) {
+          startPos++;
+          ch = str.charAt(startPos);
+        }
+        pos++;
+      } else {
+        pos++;
+      }
+    }
+    if (delimPos == sub.length) {
+      addrList.push(AjxStringUtil.trim(sub));
+      startPos += sub.length + 1;
+    }
+  }
+  AjxEmailAddress.IS_DELIM[" "] = true;
+
+  return addrList;
 };
 
 /**
  * Returns a string representation of this object.
- * 
+ *
  * @param {boolean}		shortForm	if true, return a brief version (name if available, otherwise email)
  * @param {boolean}		forceUnescape	if true, name will not be in quotes and any quotes inside the name will be unescaped (e.g. "John \"JD\" Doe" <jd@zimbra.com> becomes John "JD" Doe <jd@zimbra.com>
- * 
+ *
  * @return	{string}		a string representation of this object
  */
-AjxEmailAddress.prototype.toString =
-function(shortForm, forceUnescape) {
-
-	if (this.name) {
-		var name = this.name;
-		if (!shortForm && !forceUnescape) {
-			name = name.replace(/\\+"/g, '"');	// unescape double quotes (avoid double-escaping)
-			name = name.replace(/"/g,'\\"');  // escape quotes
-		}
-		var buffer = (shortForm || forceUnescape) ? [name] : ['"', name, '"'];
-		if (this.address && !shortForm) {
-			buffer.push(" <", this.address, ">");
-		}
-		return buffer.join("");	// quote friendly part
-	} else {
-		return this.address;
-	}
+AjxEmailAddress.prototype.toString = function(shortForm, forceUnescape) {
+  if (this.name) {
+    var name = this.name;
+    if (!shortForm && !forceUnescape) {
+      name = name.replace(/\\+"/g, '"'); // unescape double quotes (avoid double-escaping)
+      name = name.replace(/"/g, '\\"'); // escape quotes
+    }
+    var buffer = shortForm || forceUnescape ? [name] : ['"', name, '"'];
+    if (this.address && !shortForm) {
+      buffer.push(" <", this.address, ">");
+    }
+    return buffer.join(""); // quote friendly part
+  } else {
+    return this.address;
+  }
 };
 
 /**
  * Gets the address.
- * 
+ *
  * @return	{string}	the address
  */
-AjxEmailAddress.prototype.getAddress =
-function() {
-	return this.address;
+AjxEmailAddress.prototype.getAddress = function() {
+  return this.address;
 };
 
 /**
  * Sets the address.
- * 
+ *
  * @param	{string}	addr		the address
  */
-AjxEmailAddress.prototype.setAddress =
-function(addr) {
-	this.address = addr;
+AjxEmailAddress.prototype.setAddress = function(addr) {
+  this.address = addr;
 };
 
 /**
  * Gets the type (to/from/cc/bcc).
- * 
+ *
  * @return	{constant}	the type
  */
-AjxEmailAddress.prototype.getType =
-function() {
-	return this.type;
+AjxEmailAddress.prototype.getType = function() {
+  return this.type;
 };
 
 /**
  * Sets the type.
- * 
+ *
  * @param	{constant}	type		the type (to/from/cc/bcc)
  */
-AjxEmailAddress.prototype.setType =
-function(type) {
-	this.type = type;
+AjxEmailAddress.prototype.setType = function(type) {
+  this.type = type;
 };
 
 /**
  * Gets the type as a string.
- * 
+ *
  * @return	{string}	the type (to/from/cc/bcc)
  */
-AjxEmailAddress.prototype.getTypeAsString =
-function() {
-	return AjxEmailAddress.TYPE_STRING[this.type];
+AjxEmailAddress.prototype.getTypeAsString = function() {
+  return AjxEmailAddress.TYPE_STRING[this.type];
 };
 
 /**
  * Gets the name.
- * 
+ *
  * @return	{string}	the name
  */
-AjxEmailAddress.prototype.getName =
-function() {
-	return this.name;
+AjxEmailAddress.prototype.getName = function() {
+  return this.name;
 };
 
 /**
  * Gets the display name.
- * 
+ *
  * @return	{string}	the name
  */
-AjxEmailAddress.prototype.getDispName =
-function() {
-	return this.dispName;
+AjxEmailAddress.prototype.getDispName = function() {
+  return this.dispName;
 };
 
 /*
  * We use this for displaying the actual text in the cell (or group when grouping by "from")
  */
-AjxEmailAddress.prototype.getText =
-function() {
-	return this.getName() || this.getDispName() || this.getAddress();
+AjxEmailAddress.prototype.getText = function() {
+  return this.getName() || this.getDispName() || this.getAddress();
 };
 
 /**
  * Clones this email address.
- * 
+ *
  * @return	{AjxEmailAddress}	a clone of this email address
  */
-AjxEmailAddress.prototype.clone =
-function() {
-	var addr = new AjxEmailAddress(this.address, this.type, this.name, this.dispName, this.isGroup, this.canExpand);
-	addr.icon = this.icon;
-	return addr;
+AjxEmailAddress.prototype.clone = function() {
+  var addr = new AjxEmailAddress(
+    this.address,
+    this.type,
+    this.name,
+    this.dispName,
+    this.isGroup,
+    this.canExpand
+  );
+  addr.icon = this.icon;
+  return addr;
 };
 
 /**
  * Copies the email address.
- * 
+ *
  * @param	{AjxEmailAddress}	obj		the email to copy
  * @return	{AjxEmailAddress}	the newly copied email address
  */
-AjxEmailAddress.copy =
-function(obj){    
-    var addr = new AjxEmailAddress(obj.address, obj.type, obj.name, obj.dispName, obj.isGroup, obj.canExpand);
-    addr.icon = obj.icon;
-    return addr;
+AjxEmailAddress.copy = function(obj) {
+  var addr = new AjxEmailAddress(
+    obj.address,
+    obj.type,
+    obj.name,
+    obj.dispName,
+    obj.isGroup,
+    obj.canExpand
+  );
+  addr.icon = obj.icon;
+  return addr;
 };
 
-AjxEmailAddress.prototype._setName =
-function(name) {
-	if (!name) return "";
-	
-	// remove wrapping single quotes from name if present
-	if (name && name.charAt(0) == "'" && name.charAt(name.length - 1) == "'")
-		name = name.substring(1, name.length - 1);
-		
-	return name;		
+AjxEmailAddress.prototype._setName = function(name) {
+  if (!name) return "";
+
+  // remove wrapping single quotes from name if present
+  if (name && name.charAt(0) == "'" && name.charAt(name.length - 1) == "'")
+    name = name.substring(1, name.length - 1);
+
+  return name;
 };
 
-AjxEmailAddress.sortCompareByAddress =
-function(a, b) {
-
-	var addrA = a.getAddress() || "";
-	var addrB = b.getAddress() || "";
-	if (addrA.toLowerCase() > addrB.toLowerCase()) { return 1; }
-	if (addrA.toLowerCase() < addrB.toLowerCase()) { return -1; }
-	return 0;
+AjxEmailAddress.sortCompareByAddress = function(a, b) {
+  var addrA = a.getAddress() || "";
+  var addrB = b.getAddress() || "";
+  if (addrA.toLowerCase() > addrB.toLowerCase()) {
+    return 1;
+  }
+  if (addrA.toLowerCase() < addrB.toLowerCase()) {
+    return -1;
+  }
+  return 0;
 };
 
 /**
  * Returns the list of addresses with duplicates (based on email) removed.
- * 
+ *
  * @param {array}	addrs	list of AjxEmailAddress
  */
-AjxEmailAddress.dedup =
-function(addrs) {
-	var list = [], used = {};
-	if (addrs && addrs.length) {
-		for (var i = 0; i < addrs.length; i++) {
-			var addr = addrs[i];
-			if (!used[addr.address]) {
-				list.push(addr);
-			}
-			used[addr.address] = true;
-		}
-	}
-	return list;
+AjxEmailAddress.dedup = function(addrs) {
+  var list = [],
+    used = {};
+  if (addrs && addrs.length) {
+    for (var i = 0; i < addrs.length; i++) {
+      var addr = addrs[i];
+      if (!used[addr.address]) {
+        list.push(addr);
+      }
+      used[addr.address] = true;
+    }
+  }
+  return list;
 };

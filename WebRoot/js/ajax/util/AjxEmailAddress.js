@@ -245,7 +245,7 @@ AjxEmailAddress.parseEmailString = function(emailStr, type, strict) {
         good.add(addr);
         all.add(addr);
       } else {
-        good.add(addrStr);
+        bad.add(addrStr);
         all.add(new AjxEmailAddress(addrStr));
       }
     }
